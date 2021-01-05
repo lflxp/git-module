@@ -45,6 +45,14 @@ type Tree struct {
 	entries []*Entry
 }
 
+func NewTree(dir, path, branch string) *Tree {
+	return &Tree{
+		dirPath: dir,
+		path:    path,
+		branch:  branch,
+	}
+}
+
 // git ls-tree -l --full-tree HEAD cmd/|while read filename;do echo "$(echo $filename|awk '{print $1"|"$2"|"$3"|"$4"|"$5}') $(git log -1 --format="|%h|%s|%cr|%ai|%an" -- `echo $filename|awk '{print $5}'`)" ;done
 func (t *Tree) LsTree() error {
 	parseString := "|while read filename;do echo \"$(echo $filename|awk '{print $1\"|\"$2\"|\"$3\"|\"$4\"|\"$5}') $(git log -1 --format=\"|%h|%s|%cr|%ai|%an\" -- `echo $filename|awk '{print $5}'`)\" ;done"
